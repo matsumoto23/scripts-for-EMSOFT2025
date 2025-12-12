@@ -2,7 +2,7 @@
 csv=$1
 matlab -nodesktop -nosplash <<EOF
 clear;
-addpath(genpath('~/ForeSee'));
+addpath(genpath('$FORESEE_HOME'));
 addpath('~/MATLAB/Examples/R2024a/simulink_automotive/ModelingAnAutomaticTransmissionControllerExample');
 InitBreach;
 
@@ -16,14 +16,10 @@ budget_p = 10;
 input_name = {'throttle','brake'};
 input_range = [[0.0 100.0];[0.0 325.0]];
 spec_strings = {
-  'alw (not (speed[t] < 40) or (alw_[0, 8] (speed[t] < 60)))',
-  'alw (not (speed[t] < 50) or (alw_[0, 8] (speed[t] < 60)))',
-  'alw (not (speed[t] < 40) or (alw_[0, 10] (speed[t] < 60)))',
-  'alw (not (speed[t] < 50) or (alw_[0, 10] (speed[t] < 60)))',
-  'alw (not (speed[t] < 40) or (alw_[0, 8] (speed[t] < 90)))',
-  'alw (not (speed[t] < 50) or (alw_[0, 8] (speed[t] < 90)))',
-  'alw (not (speed[t] < 40) or (alw_[0, 10] (speed[t] < 90)))',
-  'alw (not (speed[t] < 50) or (alw_[0, 10] (speed[t] < 90)))'
+  'alw (not (gear[t] == 1) or (RPM[t] < 4400))',
+  'alw (not (gear[t] == 1) or (RPM[t] < 4450))',
+  'alw (not (gear[t] == 1) or (RPM[t] < 4500))',
+  'alw (not (gear[t] == 1) or (RPM[t] < 4550))'
 };
 concated_string = strjoin(spec_strings, ', ');
 specs = [];
@@ -37,7 +33,7 @@ falsified = [];
 time = [];
 num_sim = [];
 for n = 1:trials
-	status = rmdir('~/ForeSee/breach/Ext/ModelsData/Cache/*', 's');
+	status = rmdir('$FORESEE_HOME/breach/Ext/ModelsData/Cache/*', 's');
 	tmp_falsified = 0;
 	tmp_num_sim = 0;
 	tmp_time = 0;
@@ -59,7 +55,7 @@ spec = [];
 filename = [];
 for i = 1:trials
 	spec = [spec;concated_string];
-	filename = [filename;'Autotrans_shift_8_foresee'];
+	filename = [filename;'Autotrans_shift_5_foresee'];
 end
 result = table(filename, spec, num_sim, falsified, time);
 writetable(result,'$csv','Delimiter',';');

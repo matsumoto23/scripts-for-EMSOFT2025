@@ -2,7 +2,7 @@
 csv=$1
 matlab -nodesktop -nosplash <<EOF
 clear;
-addpath(genpath('~/ForeSee'));
+addpath(genpath('$FORESEE_HOME'));
 addpath('~/MATLAB/Examples/R2024a/simulink_automotive/ModelingAnAutomaticTransmissionControllerExample');
 InitBreach;
 
@@ -16,30 +16,10 @@ budget_p = 10;
 input_name = {'throttle','brake'};
 input_range = [[0.0 100.0];[0.0 325.0]];
 spec_strings = {
-  'alw_[6,10] (speed[t] < 90 and RPM[t] < 4600)',
-  'alw_[6,10] (speed[t] < 90 and RPM[t] < 4700)',
-  'alw_[6,10] (speed[t] < 95 and RPM[t] < 4600)',
-  'alw_[6,10] (speed[t] < 95 and RPM[t] < 4700)',
-  'alw_[6,10] (speed[t] < 100 and RPM[t] < 4600)',
-  'alw_[6,10] (speed[t] < 100 and RPM[t] < 4700)',
-  'alw_[6,10] (speed[t] < 105 and RPM[t] < 4600)',
-  'alw_[6,10] (speed[t] < 105 and RPM[t] < 4700)',
-  'alw_[11,15] (speed[t] < 90 and RPM[t] < 4600)',
-  'alw_[11,15] (speed[t] < 90 and RPM[t] < 4700)',
-  'alw_[11,15] (speed[t] < 95 and RPM[t] < 4600)',
-  'alw_[11,15] (speed[t] < 95 and RPM[t] < 4700)',
-  'alw_[11,15] (speed[t] < 100 and RPM[t] < 4600)',
-  'alw_[11,15] (speed[t] < 100 and RPM[t] < 4700)',
-  'alw_[11,15] (speed[t] < 105 and RPM[t] < 4600)',
-  'alw_[11,15] (speed[t] < 105 and RPM[t] < 4700)',
-  'alw_[16,20] (speed[t] < 90 and RPM[t] < 4600)',
-  'alw_[16,20] (speed[t] < 90 and RPM[t] < 4700)',
-  'alw_[16,20] (speed[t] < 95 and RPM[t] < 4600)',
-  'alw_[16,20] (speed[t] < 95 and RPM[t] < 4700)',
-  'alw_[16,20] (speed[t] < 100 and RPM[t] < 4600)',
-  'alw_[16,20] (speed[t] < 100 and RPM[t] < 4700)',
-  'alw_[16,20] (speed[t] < 105 and RPM[t] < 4600)',
-  'alw_[16,20] (speed[t] < 105 and RPM[t] < 4700)'
+  'alw ((speed[t] < 100 and gear[t] <= 3) or RPM[t] < 4600)',
+  'alw ((speed[t] < 100 and gear[t] <= 3) or RPM[t] < 4650)',
+  'alw ((speed[t] < 105 and gear[t] <= 3) or RPM[t] < 4600)',
+  'alw ((speed[t] < 105 and gear[t] <= 3) or RPM[t] < 4650)'
 };
 concated_string = strjoin(spec_strings, ', ');
 specs = [];
@@ -53,7 +33,7 @@ falsified = [];
 time = [];
 num_sim = [];
 for n = 1:trials
-	status = rmdir('~/ForeSee/breach/Ext/ModelsData/Cache/*', 's');
+	status = rmdir('$FORESEE_HOME/breach/Ext/ModelsData/Cache/*', 's');
 	tmp_falsified = 0;
 	tmp_num_sim = 0;
 	tmp_time = 0;
@@ -75,7 +55,7 @@ spec = [];
 filename = [];
 for i = 1:trials
 	spec = [spec;concated_string];
-	filename = [filename;'Autotrans_shift_2_foresee'];
+	filename = [filename;'Autotrans_shift_7_foresee'];
 end
 result = table(filename, spec, num_sim, falsified, time);
 writetable(result,'$csv','Delimiter',';');

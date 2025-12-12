@@ -2,8 +2,7 @@
 csv=$1
 matlab -nodesktop -nosplash <<EOF
 clear;
-addpath(genpath('~/ForeSee'));
-addpath('~/MATLAB/Examples/R2024a/simulink_automotive/ModelingAnAutomaticTransmissionControllerExample');
+addpath(genpath('$FORESEE_HOME'));
 InitBreach;
 
 
@@ -16,9 +15,10 @@ budget_p = 10;
 input_name = {'In1','In2'};
 input_range = [[0.0 1.0];[0.0 1.0]];
 spec_strings = {
-	'alw_[0,70] ev_[0,30] ((Out5[t] - Out4[t] > 10 and not(Out5[t] - Out4[t] ==10))and (Out4[t] - Out3[t] > 10 and not(Out4[t] - Out3[t] == 10)))',
-  'alw_[0,70] ev_[0,30] ((Out5[t] - Out4[t] > 11 and not(Out5[t] - Out4[t] ==11))and (Out4[t] - Out3[t] > 11 and not(Out4[t] - Out3[t] == 11)))',
-  'alw_[0,70] ev_[0,30] ((Out5[t] - Out4[t] > 12 and not(Out5[t] - Out4[t] ==12))and (Out4[t] - Out3[t] > 12 and not(Out4[t] - Out3[t] == 12)))'
+  'alw (Out4[t]-Out3[t] < 50)',
+  'alw (Out5[t]-Out4[t] < 50)',
+  'alw (Out4[t]-Out3[t] > 9)',
+  'alw (Out5[t]-Out4[t] > 9)'
 };
 concated_string = strjoin(spec_strings, ', ');
 specs = [];
@@ -32,7 +32,7 @@ falsified = [];
 time = [];
 num_sim = [];
 for n = 1:trials
-	status = rmdir('~/ForeSee/breach/Ext/ModelsData/Cache/*', 's');
+	status = rmdir('$FORESEE_HOME/breach/Ext/ModelsData/Cache/*', 's');
 	tmp_falsified = 0;
 	tmp_num_sim = 0;
 	tmp_time = 0;
@@ -54,7 +54,7 @@ spec = [];
 filename = [];
 for i = 1:trials
 	spec = [spec;concated_string];
-	filename = [filename;'cars_2_foresee'];
+	filename = [filename;'cars_10_foresee'];
 end
 result = table(filename, spec, num_sim, falsified, time);
 writetable(result,'$csv','Delimiter',';');

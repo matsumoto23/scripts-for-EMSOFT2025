@@ -1,2 +1,10 @@
+# MAC
 .DS_Store
 
+# MATLAB
+*.slxc
+*.dat
+slprj/
+
+#VSCode
+.vscode

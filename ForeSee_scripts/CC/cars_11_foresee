@@ -2,8 +2,7 @@
 csv=$1
 matlab -nodesktop -nosplash <<EOF
 clear;
-addpath(genpath('~/ForeSee'));
-addpath('~/MATLAB/Examples/R2024a/simulink_automotive/ModelingAnAutomaticTransmissionControllerExample');
+addpath(genpath('$FORESEE_HOME'));
 InitBreach;
 
 
@@ -33,7 +32,7 @@ falsified = [];
 time = [];
 num_sim = [];
 for n = 1:trials
-	status = rmdir('~/ForeSee/breach/Ext/ModelsData/Cache/*', 's');
+	status = rmdir('$FORESEE_HOME/breach/Ext/ModelsData/Cache/*', 's');
 	tmp_falsified = 0;
 	tmp_num_sim = 0;
 	tmp_time = 0;
