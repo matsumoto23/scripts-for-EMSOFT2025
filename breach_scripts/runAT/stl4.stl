@@ -1,0 +1,4 @@
+stl4_1 := alw ((gear[t] == 1 => speed[t] < 35) and (gear[t] == 2 => speed[t] < 65))
+stl4_2 := alw ((gear[t] == 1 => speed[t] < 35) and (gear[t] == 2 => speed[t] < 70))
+stl4_1 := alw ((gear[t] == 1 => speed[t] < 40) and (gear[t] == 2 => speed[t] < 65))
+stl4_2 := alw ((gear[t] == 1 => speed[t] < 40) and (gear[t] == 2 => speed[t] < 70))

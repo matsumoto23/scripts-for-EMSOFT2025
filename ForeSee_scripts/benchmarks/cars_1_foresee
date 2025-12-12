@@ -1,0 +1,63 @@
+#!/bin/sh
+csv=$1
+matlab -nodesktop -nosplash <<EOF
+clear;
+addpath(genpath('~/ForeSee'));
+addpath('~/MATLAB/Examples/R2024a/simulink_automotive/ModelingAnAutomaticTransmissionControllerExample');
+InitBreach;
+
+
+mdl = 'cars';
+Br = BreachSimulinkSystem(mdl);
+budget_t = 1200;
+scalar = 0.2;
+controlpoints = 20;
+budget_p = 10;
+input_name = {'In1','In2'};
+input_range = [[0.0 1.0];[0.0 1.0]];
+spec_strings = {
+	'alw_[0,100] (Out5[t] - Out4[t] < 30 and Out4[t] - Out3[t] < 30)',
+  'alw_[0,100] (Out5[t] - Out4[t] < 35 and Out4[t] - Out3[t] < 35)',
+  'alw_[0,100] (Out5[t] - Out4[t] < 40 and Out4[t] - Out3[t] < 40)'
+};
+concated_string = strjoin(spec_strings, ', ');
+specs = [];
+for i = 1:size(spec_strings, 1)
+	phi = spec_strings{i};
+	specs = [specs, [STL_Formula(strcat('phi', int2str(i)), phi)]]
+end
+T = 0:.01:100;
+trials = 10;
+falsified = [];
+time = [];
+num_sim = [];
+for n = 1:trials
+	status = rmdir('~/ForeSee/breach/Ext/ModelsData/Cache/*', 's');
+	tmp_falsified = 0;
+	tmp_num_sim = 0;
+	tmp_time = 0;
+	for phi = specs
+		if budget_t-tmp_time > 0
+			m = mcts(phi, mdl, budget_t-tmp_time, budget_p, controlpoints, input_name, input_range, T, scalar)
+			tmp_falsified = tmp_falsified + m.falsified;
+			tmp_num_sim = tmp_num_sim + m.root.num_sim;
+			tmp_time = tmp_time + m.time_cost
+		end
+	end
+	falsified = [falsified; tmp_falsified];
+	num_sim = [num_sim;tmp_num_sim];
+	time = [time;tmp_time];
+end
+scalars = ones(trials, 1)*scalar;
+budget_ps = ones(trials, 1)*budget_p;
+spec = [];
+filename = [];
+for i = 1:trials
+	spec = [spec;concated_string];
+	filename = [filename;'cars_1_foresee'];
+end
+result = table(filename, spec, num_sim, falsified, time);
+writetable(result,'$csv','Delimiter',';');
+quit force
+EOF
+rm *.mat

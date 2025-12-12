@@ -1,0 +1,1 @@
+stl9_1  := (alw_[0, 26] (speed[t] < 90)) or (alw_[28, 28] (speed[t] > 50))

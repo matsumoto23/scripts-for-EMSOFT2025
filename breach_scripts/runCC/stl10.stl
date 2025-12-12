@@ -1,0 +1,4 @@
+stl10_1 := alw (Out4[t]-Out3[t] < 50)
+stl10_2 := alw (Out5[t]-Out4[t] < 50)
+stl10_3 := alw (Out4[t]-Out3[t] > 9)
+stl10_4 := alw (Out5[t]-Out4[t] > 9)

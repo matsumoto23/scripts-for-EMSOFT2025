@@ -1,0 +1,4 @@
+stl11_1 := alw Out2[t]-Out1[t] < 40
+stl11_2 := alw Out3[t]-Out2[t] < 40
+stl11_3 := alw Out4[t]-Out3[t] < 40
+stl11_4 := alw Out5[t]-Out4[t] < 40

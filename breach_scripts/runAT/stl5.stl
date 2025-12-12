@@ -1,0 +1,4 @@
+stl5_1 := alw (gear[t] == 1 => (RPM[t] < 4400))
+stl5_2 := alw (gear[t] == 1 => (RPM[t] < 4450))
+stl5_3 := alw (gear[t] == 1 => (RPM[t] < 4500))
+stl5_4 := alw (gear[t] == 1 => (RPM[t] < 4550))

@@ -1,0 +1,8 @@
+stl3_1 := alw (speed[t] < 85 or RPM[t] < 4600)
+stl3_2 := alw (speed[t] < 85 or RPM[t] < 4650)
+stl3_3 := alw (speed[t] < 90 or RPM[t] < 4600)
+stl3_4 := alw (speed[t] < 90 or RPM[t] < 4650)
+stl3_5 := alw (speed[t] < 95 or RPM[t] < 4600)
+stl3_6 := alw (speed[t] < 95 or RPM[t] < 4650)
+stl3_7 := alw (speed[t] < 100 or RPM[t] < 4600)
+stl3_8 := alw (speed[t] < 100 or RPM[t] < 4650)

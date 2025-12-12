@@ -1,0 +1,3 @@
+stl1_1 := alw_[0,100] (Out5[t] - Out4[t] < 30 and Out4[t] - Out3[t] < 30)
+stl1_2 := alw_[0,100] (Out5[t] - Out4[t] < 35 and Out4[t] - Out3[t] < 35)
+stl1_3 := alw_[0,100] (Out5[t] - Out4[t] < 40 and Out4[t] - Out3[t] < 40)

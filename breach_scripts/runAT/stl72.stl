@@ -1,0 +1,4 @@
+stl72_1 := alw ((speed[t] < 100 and gear[t] < 3) or RPM[t] < 4600)
+stl72_2 := alw ((speed[t] < 100 and gear[t] < 3) or RPM[t] < 4650)
+stl72_3 := alw ((speed[t] < 105 and gear[t] < 3) or RPM[t] < 4600)
+stl72_4 := alw ((speed[t] < 105 and gear[t] < 3) or RPM[t] < 4650)

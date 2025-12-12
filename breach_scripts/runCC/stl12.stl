@@ -1,0 +1,4 @@
+stl12_1 := alw (Out2[t]-Out1[t] > 40 => Out3[t]-Out2[t] < 40)
+stl12_2 := alw (Out3[t]-Out2[t] > 40 => (Out2[t]-Out1[t] < 40 or Out4[t]-Out3[t] < 40))
+stl12_3 := alw (Out4[t]-Out3[t] > 40 => (Out3[t]-Out2[t] < 40 or Out5[t]-Out4[t] < 40))
+stl12_4 := alw (Out5[t]-Out4[t] > 40 => Out4[t]-Out3[t] < 40)

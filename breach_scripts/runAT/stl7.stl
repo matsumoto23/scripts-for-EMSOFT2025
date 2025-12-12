@@ -1,0 +1,1 @@
+stl7_1 := alw ((speed[t] < 105 and gear[t] < 3) or RPM[t] < 4650)

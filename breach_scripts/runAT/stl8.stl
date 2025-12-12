@@ -1,0 +1,8 @@
+stl8_1  := alw ((speed[t] < 40)  => (alw_[0, 8] (speed[t] < 60)))
+stl8_2  := alw ((speed[t] < 50)  => (alw_[0, 8] (speed[t] < 60)))
+stl8_3  := alw ((speed[t] < 40)  => (alw_[0, 10] (speed[t] < 60)))
+stl8_4  := alw ((speed[t] < 50)  => (alw_[0, 10] (speed[t] < 60)))
+stl8_5  := alw ((speed[t] < 40)  => (alw_[0, 8] (speed[t] < 90)))
+stl8_6  := alw ((speed[t] < 50)  => (alw_[0, 8] (speed[t] < 90)))
+stl8_7 := alw ((speed[t] < 40)  => (alw_[0, 10] (speed[t] < 90)))
+stl8_8 := alw ((speed[t] < 50)  => (alw_[0, 10] (speed[t] < 90)))
